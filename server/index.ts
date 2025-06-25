@@ -11,6 +11,8 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
     credentials: true,
   },
+  allowEIO3: true, // helps with some browser/socket mismatches
+
 });
 
 // Track socket-to-user mapping to remove on disconnect
