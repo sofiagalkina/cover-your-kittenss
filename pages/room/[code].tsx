@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001', { autoConnect: false });
+const socket = io('https://cover-your-kittenss.up.railway.app', { autoConnect: false });
 
 export default function RoomPage() {
   const router = useRouter();
