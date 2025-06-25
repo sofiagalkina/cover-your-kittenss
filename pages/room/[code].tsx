@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import io from 'socket.io-client';
 
-const socket = io('https://cover-your-kittenss.up.railway.app', {
+const socket = io('https://cover-your-kittenss-production.up.railway.app', {
   transports: ['websocket'], // ⬅️ force websocket only
   withCredentials: true,
   autoConnect: false,
