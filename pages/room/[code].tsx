@@ -11,38 +11,41 @@ const socket = io('https://cover-your-kittenss-production.up.railway.app', {
 export default function RoomPage() {
   const router = useRouter();
   const { code } = router.query;
+  const isReady = router.isReady;
   const [username, setUsername] = useState('');
   const [users, setUsers] = useState<string[]>([]);
   const [joined, setJoined] = useState(false);
 
-  useEffect(() => {
-   if (!code) return;
+    useEffect(() => {
+    if (!isReady || !code) return;
 
-   socket.on('room-users', (users: string[]) => {
-    console.log('👥 Updated users in room:', users);
-    setUsers(users);
-   });
-
-   return () => {
-    socket.off('room-users');
-    socket.disconnect();
-   };
-  }, [code]);
-
-
-
-
-  const handleJoin = () => {
-    if (username.trim()) {
-        socket.connect();
-
-         socket.once('connect', () => {
-         console.log('✅ Connected, now joining room...');
-         socket.emit('join-room', { code, username });
-         setJoined(true);
+    socket.on('room-users', (users: string[]) => {
+        console.log('👥 Updated users in room:', users);
+        setUsers(users);
     });
-  }
-  };
+
+    return () => {
+        socket.off('room-users');
+        socket.disconnect();
+    };
+    }, [isReady, code]);
+
+
+
+
+
+    const handleJoin = () => {
+    if (!isReady || !code || !username.trim()) return;
+
+    socket.connect();
+
+    socket.once('connect', () => {
+        console.log('✅ Connected, now joining room...');
+        socket.emit('join-room', { code, username: username.trim() });
+        setJoined(true);
+    });
+    };
+
 
   return (
     <div className="p-8">
