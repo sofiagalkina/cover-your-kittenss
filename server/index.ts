@@ -7,7 +7,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://cover-your-kittenss-production.up.railway.app',
+    origin: 'https://cover-your-kittenss.vercel.app',
     methods: ['GET', 'POST'],
     credentials: true,
   },

@@ -17,6 +17,7 @@ export default function RoomPage() {
   const [joined, setJoined] = useState(false);
 
     useEffect(() => {
+        
     if (!isReady || !code) return;
 
     socket.on('room-users', (users: string[]) => {
