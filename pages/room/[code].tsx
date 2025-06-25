@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import io from 'socket.io-client';
 
-const socket = io('https://cover-your-kittenss.up.railway.app', { autoConnect: false });
-
+const socket = io('https://cover-your-kittenss.up.railway.app', {
+  transports: ['websocket'], // ⬅️ force websocket only
+  withCredentials: true,
+  autoConnect: false,
+});
 export default function RoomPage() {
   const router = useRouter();
   const { code } = router.query;
