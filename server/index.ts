@@ -5,14 +5,14 @@ import cors from 'cors';
 
 const app = express();
 
-// ✅ Serve CORS for HTTP routes (required for polling preflight)
+// ✅ Serve CORS for HTTP routes (polling, preflight)
 app.use(cors({
   origin: 'https://cover-your-kittenss.vercel.app',
   methods: ['GET', 'POST'],
   credentials: true,
 }));
 
-// ✅ Optional: health check route
+// ✅ Health check
 app.get('/', (req, res) => {
   res.send('✅ Backend alive');
 });
