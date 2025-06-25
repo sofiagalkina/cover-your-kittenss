@@ -16,30 +16,32 @@ export default function RoomPage() {
   const [joined, setJoined] = useState(false);
 
   useEffect(() => {
-    if (!code) return;
+   if (!code) return;
 
-    socket.connect();
+   socket.on('room-users', (users: string[]) => {
+    console.log('👥 Updated users in room:', users);
+    setUsers(users);
+   });
 
-    socket.on('connect', () => {
-      console.log('✅ Connected to socket:', socket.id);
-    });
-
-    socket.on('room-users', (users: string[]) => {
-      console.log('👥 Updated users in room:', users);
-      setUsers(users);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
+   return () => {
+    socket.off('room-users');
+    socket.disconnect();
+   };
   }, [code]);
+
+
+
 
   const handleJoin = () => {
     if (username.trim()) {
-      console.log('📤 Emitting join-room', { code, username });
-      socket.emit('join-room', { code, username });
-      setJoined(true);
-    }
+        socket.connect();
+
+         socket.once('connect', () => {
+         console.log('✅ Connected, now joining room...');
+         socket.emit('join-room', { code, username });
+         setJoined(true);
+    });
+  }
   };
 
   return (
