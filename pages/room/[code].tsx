@@ -7,7 +7,7 @@ const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL!
 const socket = io(SOCKET_URL, {
   autoConnect: false,
   withCredentials: true,
-  transports: ['websocket'],   // skip polling to simplify CORS
+  transports: ['polling', 'websocket'],   // skip polling to simplify CORS
 })
 
 socket.on('connect_error', err => {
@@ -28,7 +28,7 @@ export default function RoomPage() {
 
     useEffect(() => {
         
-    if (!isReady || !code) return;
+    if (!router.isReady || !code) return;
 
     socket.on('room-users', (users: string[]) => {
         console.log('👥 Updated users in room:', users);
@@ -37,24 +37,19 @@ export default function RoomPage() {
 
     return () => {
         socket.off('room-users');
-        socket.disconnect();
     };
-    }, [isReady, code]);
-
-
-
+    }, [router.isReady, code]);
 
 
     const handleJoin = () => {
     if (!isReady || !code || !username.trim()) return;
-
     socket.connect();
-
-    socket.once('connect', () => {
+     socket.once('connect', () => {
         console.log('✅ Connected, now joining room...');
         socket.emit('join-room', { code, username: username.trim() });
         setJoined(true);
     });
+
     };
 
 
