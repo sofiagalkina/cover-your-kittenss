@@ -5,6 +5,7 @@ import cors from 'cors';
 
 const app = express();
 
+console.log('ENV FRONTEND_URL:', process.env.FRONTEND_URL)
 const FRONTEND_URLS = [
   process.env.FRONTEND_URL,    // now defined in Railway
   'http://localhost:3000',     // for local dev
