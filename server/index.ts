@@ -10,6 +10,10 @@ const FRONTEND_URLS = [
   'http://localhost:3000',     // for local dev
 ].filter(Boolean) as string[]  // remove any falsey entries
 
+
+console.log('Allowed origins are:', FRONTEND_URLS);
+
+
 // ✅ Serve CORS for HTTP routes (polling, preflight)
 app.use(cors({
   origin: (origin, callback) => {
