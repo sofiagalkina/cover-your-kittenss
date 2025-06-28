@@ -6,9 +6,9 @@ import cors from 'cors';
 const app = express();
 
 const FRONTEND_URLS = [
-  process.env.FRONTEND_URL!,        // https://cover-your-kittenss.vercel.app
-  'http://localhost:3000'           // dev
-]
+  process.env.FRONTEND_URL,    // now defined in Railway
+  'http://localhost:3000',     // for local dev
+].filter(Boolean) as string[]  // remove any falsey entries
 
 // ✅ Serve CORS for HTTP routes (polling, preflight)
 app.use(cors({
