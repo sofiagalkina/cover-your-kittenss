@@ -5,15 +5,18 @@ import cors from 'cors';
 
 const app = express();
 
-console.log('ENV FRONTEND_URL:', process.env.FRONTEND_URL)
+const rawFrontend = (process.env.FRONTEND_URL ?? '')
+  .trim()            // remove leading/trailing whitespace
+  .replace(/;$/, '') // drop a trailing semicolon if one snuck in
+
 const FRONTEND_URLS = [
-  process.env.FRONTEND_URL,    // now defined in Railway
-  'http://localhost:3000',     // for local dev
-].filter(Boolean) as string[]  // remove any falsey entries
+  rawFrontend,
+  'http://localhost:3000',
+].filter(Boolean) as string[]
 
-
-console.log('Allowed origins are:', FRONTEND_URLS);
-
+console.log('↳ ENV FRONTEND_URL:', process.env.FRONTEND_URL)
+console.log('↳ Normalized FRONTEND_URL:', rawFrontend)
+console.log('↳ Allowed origins list:', FRONTEND_URLS)
 
 // ✅ Serve CORS for HTTP routes (polling, preflight)
 app.use(cors({
