@@ -5,12 +5,23 @@ import cors from 'cors';
 
 const app = express();
 
+const FRONTEND_URLS = [
+  process.env.FRONTEND_URL!,        // https://cover-your-kittenss.vercel.app
+  'http://localhost:3000'           // dev
+]
+
 // ✅ Serve CORS for HTTP routes (polling, preflight)
 app.use(cors({
-  origin: 'https://cover-your-kittenss.vercel.app',
-  methods: ['GET', 'POST'],
-  credentials: true,
-}));
+  origin: (origin, callback) => {
+    // allow requests with no origin (mobile apps, curl, etc)
+    if (!origin || FRONTEND_URLS.includes(origin)) {
+      return callback(null, true)
+    }
+    callback(new Error(`CORS policy violation: ${origin}`))
+  },
+  methods: ['GET','POST','OPTIONS'],
+  credentials: true
+}))
 
 // ✅ Health check
 app.get('/', (req, res) => {
@@ -18,14 +29,12 @@ app.get('/', (req, res) => {
 });
 
 const server = createServer(app);
-
 const io = new Server(server, {
   cors: {
-    origin: 'https://cover-your-kittenss.vercel.app',
-    methods: ['GET', 'POST'],
+    origin: FRONTEND_URLS,
+    methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true,
-  },
-  allowEIO3: true,
+  }
 });
 
 const rooms: Record<string, string[]> = {};
