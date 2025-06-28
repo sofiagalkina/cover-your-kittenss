@@ -2,10 +2,20 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import io from 'socket.io-client';
 
-const socket = io('https://cover-your-kittenss-production.up.railway.app', {
-  withCredentials: true,
+
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL!
+const socket = io(SOCKET_URL, {
   autoConnect: false,
-});
+  withCredentials: true,
+  transports: ['websocket'],   // skip polling to simplify CORS
+})
+
+socket.on('connect_error', err => {
+  console.error('Socket connection error', err)
+})
+socket.on('reconnect_failed', () => {
+  console.error('Socket reconnect failed')
+})
 
 
 export default function RoomPage() {
