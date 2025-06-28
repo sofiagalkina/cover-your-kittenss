@@ -4,19 +4,26 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 
 const app = express();
+// 1) Grab whatever you set in Railway
+const raw = process.env.FRONTEND_URL ?? ''
 
-const rawFrontend = (process.env.FRONTEND_URL ?? '')
-  .trim()            // remove leading/trailing whitespace
-  .replace(/;$/, '') // drop a trailing semicolon if one snuck in
+// 2) Log its exact contents (including any invisible chars)
+console.log(`↳ raw FRONTEND_URL (len ${raw.length}): `, JSON.stringify(raw))
 
+// 3) Normalize it—strip whitespace, semicolons, commas, whatever
+const rawFrontend = raw
+  .trim()                   // chop off leading/trailing spaces
+  .replace(/[;,]+$/, '')    // drop any number of ; or , at the end
+
+// 4) Build your final array
 const FRONTEND_URLS = [
   rawFrontend,
-  'http://localhost:3000',
-].filter(Boolean) as string[]
+  'http://localhost:3000'
+].filter(Boolean)
 
-console.log('↳ ENV FRONTEND_URL:', process.env.FRONTEND_URL)
-console.log('↳ Normalized FRONTEND_URL:', rawFrontend)
-console.log('↳ Allowed origins list:', FRONTEND_URLS)
+// 5) Show us what’s really in there now
+console.log(`↳ normalized FRONTEND_URL (len ${rawFrontend.length}): `, JSON.stringify(rawFrontend))
+console.log(`↳ allowed origins:`, FRONTEND_URLS.map(u => JSON.stringify(u)))
 
 // ✅ Serve CORS for HTTP routes (polling, preflight)
 app.use(cors({
