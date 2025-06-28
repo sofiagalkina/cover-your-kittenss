@@ -5,43 +5,31 @@ import cors from 'cors';
 
 const app = express();
 // 1) Grab whatever you set in Railway
+// Grab and aggressively clean
 const raw = process.env.FRONTEND_URL ?? ''
+console.log('↳ raw FRONTEND_URL:', JSON.stringify(raw))
 
-// 2) Log its exact contents (including any invisible chars)
-console.log(`↳ raw FRONTEND_URL (len ${raw.length}): `, JSON.stringify(raw))
+const clean = raw
+  .trim()                    // drop whitespace
+  .replace(/^["';]+/, '')    // drop leading " or ' or ;
+  .replace(/["';]+$/, '')    // drop trailing " or ' or ;
 
-// 3) Normalize it—strip whitespace, semicolons, commas, whatever
-const rawFrontend = raw
-  .trim()                   // chop off leading/trailing spaces
-  .replace(/[;,]+$/, '')    // drop any number of ; or , at the end
+console.log('↳ cleaned FRONTEND_URL:', JSON.stringify(clean))
 
-// 4) Build your final array
-const FRONTEND_URLS = [
-  rawFrontend,
-  'http://localhost:3000'
-].filter(Boolean)
+const FRONTEND_URLS = [ clean, 'http://localhost:3000' ].filter(Boolean)
+console.log('↳ allowed origins:', FRONTEND_URLS)
 
-// 5) Show us what’s really in there now
-console.log(`↳ normalized FRONTEND_URL (len ${rawFrontend.length}): `, JSON.stringify(rawFrontend))
-console.log(`↳ allowed origins:`, FRONTEND_URLS.map(u => JSON.stringify(u)))
-
-// ✅ Serve CORS for HTTP routes (polling, preflight)
+// CORS
 app.use(cors({
-  origin: (origin, callback) => {
-    // allow requests with no origin (mobile apps, curl, etc)
-    if (!origin || FRONTEND_URLS.includes(origin)) {
-      return callback(null, true)
-    }
-    callback(new Error(`CORS policy violation: ${origin}`))
+  origin: (origin, cb) => {
+    if (!origin || FRONTEND_URLS.includes(origin)) return cb(null, true)
+    cb(new Error(`CORS violation: ${origin}`))
   },
   methods: ['GET','POST','OPTIONS'],
   credentials: true
 }))
 
-// ✅ Health check
-app.get('/', (req, res) => {
-  res.send('✅ Backend alive');
-});
+// …Socket.IO constructor with the same FRONTEND_URLS…
 
 const server = createServer(app);
 const io = new Server(server, {
