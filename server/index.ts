@@ -13,6 +13,8 @@ const clean = raw
   .trim()                    // drop whitespace
   .replace(/^["';]+/, '')    // drop leading " or ' or ;
   .replace(/["';]+$/, '')    // drop trailing " or ' or ;
+  .replace(/;$/, '');         // drop extra ;
+
 
 console.log('↳ cleaned FRONTEND_URL:', JSON.stringify(clean))
 
