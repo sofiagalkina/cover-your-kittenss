@@ -21,10 +21,14 @@ console.log('↳ allowed origins:', FRONTEND_URLS)
 
 // CORS
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || FRONTEND_URLS.includes(origin)) return cb(null, true)
-    cb(new Error(`CORS violation: ${origin}`))
-  },
+ origin: (origin, cb) => {
+  if (!origin) return cb(null, true);
+  const normalized = origin.replace(/\/+$/, '').toLowerCase(); // remove trailing slashes and lowercase
+  if (FRONTEND_URLS.map(u => u.replace(/\/+$/, '').toLowerCase()).includes(normalized)) {
+    return cb(null, true);
+  }
+  cb(new Error(`CORS violation: ${origin}`));
+},
   methods: ['GET','POST','OPTIONS'],
   credentials: true
 }))
