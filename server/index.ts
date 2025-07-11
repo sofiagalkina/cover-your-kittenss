@@ -17,9 +17,11 @@ const clean = raw
 
 
 console.log('↳ cleaned FRONTEND_URL:', JSON.stringify(clean))
-
 const FRONTEND_URLS = [ clean, 'http://localhost:3000' ].filter(Boolean)
 console.log('↳ allowed origins:', FRONTEND_URLS)
+
+console.log('👉 process.env.FRONTEND_URL =', JSON.stringify(process.env.FRONTEND_URL));
+
 
 // CORS
 app.use(cors({
