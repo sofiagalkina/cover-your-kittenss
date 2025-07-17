@@ -20,7 +20,7 @@ const clean = raw
 console.log('↳ cleaned FRONTEND_URL (.stringify):', JSON.stringify(clean))
 console.log('↳ cleaned FRONTEND_URL:', clean);
 
-const FRONTEND_URLS = [ clean, 'http://localhost:3000', 'https://cover-your-kittenss.vercel.app' ].filter(Boolean)
+const FRONTEND_URLS = ['http://localhost:3000', 'https://cover-your-kittenss.vercel.app' ];
 console.log('↳ allowed origins:', FRONTEND_URLS)
 
 console.log('👉 process.env.FRONTEND_URL =', JSON.stringify(process.env.FRONTEND_URL));
