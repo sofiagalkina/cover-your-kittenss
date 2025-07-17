@@ -25,20 +25,33 @@ console.log('↳ allowed origins:', FRONTEND_URLS)
 
 console.log('👉 process.env.FRONTEND_URL =', JSON.stringify(process.env.FRONTEND_URL));
 
+// extra check to see where semicolon is coming from:
+
+FRONTEND_URLS.forEach((url, i) => {
+  console.log(`🧪 FRONTEND_URLS[${i}]:`, url);
+  console.log(`🧬 Chars:`, [...url].map(c => c + ' [' + c.charCodeAt(0) + ']'));
+});
 
 // CORS
+
 app.use(cors({
- origin: (origin, cb) => {
-  if (!origin) return cb(null, true);
-  const normalized = origin.replace(/\/+$/, '').toLowerCase(); // remove trailing slashes and lowercase
-  if (FRONTEND_URLS.map(u => u.replace(/\/+$/, '').toLowerCase()).includes(normalized)) {
-    return cb(null, true);
-  }
-  cb(new Error(`CORS violation: ${origin}`));
-},
-  methods: ['GET','POST','OPTIONS'],
+  origin: function(origin, cb) {
+    if (!origin) return cb(null, true); // Allow non-browser requests
+
+    const normalized = origin.replace(/\/+$/, '').toLowerCase();
+    const allowed = FRONTEND_URLS.map(u => u.replace(/\/+$/, '').toLowerCase());
+
+    console.log('🌐 Incoming Origin:', normalized);
+    console.log('✅ Allowed Origins:', allowed);
+
+    if (allowed.includes(normalized)) {
+      return cb(null, true);
+    }
+
+    return cb(new Error(`CORS violation from origin: ${origin}`));
+  },
   credentials: true
-}))
+}));
 
 // …Socket.IO constructor with the same FRONTEND_URLS…
 
