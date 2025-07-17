@@ -20,18 +20,13 @@ const clean = raw
 console.log('↳ cleaned FRONTEND_URL (.stringify):', JSON.stringify(clean))
 console.log('↳ cleaned FRONTEND_URL:', clean);
 
-const FRONTEND_URLS = [ clean, 'http://localhost:3000' ].filter(Boolean)
+const FRONTEND_URLS = [ clean, 'http://localhost:3000', 'https://cover-your-kittenss.vercel.app' ].filter(Boolean)
 console.log('↳ allowed origins:', FRONTEND_URLS)
 
 console.log('👉 process.env.FRONTEND_URL =', JSON.stringify(process.env.FRONTEND_URL));
 console.log(`🔗 Backend public URL: ${process.env.RAILWAY_PUBLIC_DOMAIN || 'Unknown'}`);
 
-// extra check to see where semicolon is coming from:
 
-FRONTEND_URLS.forEach((url, i) => {
-  console.log(`🧪 FRONTEND_URLS[${i}]:`, url);
-  console.log(`🧬 Chars:`, [...url].map(c => c + ' [' + c.charCodeAt(0) + ']'));
-});
 
 // CORS
 

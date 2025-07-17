@@ -8,7 +8,7 @@ const socket = io(SOCKET_URL, {
   autoConnect: false,
   withCredentials: true,
   transports: ['polling', 'websocket'],   // skip polling to simplify CORS
-})
+});
 
 socket.on('connect_error', err => {
   console.error('Socket connection error', err)
