@@ -9,6 +9,7 @@ const app = express();
 const raw = process.env.FRONTEND_URL ?? ''
 console.log('↳ raw FRONTEND_URL:', JSON.stringify(raw))
 
+
 const clean = raw
   .trim()                    // drop whitespace
   .replace(/^["';]+/, '')    // drop leading " or ' or ;
@@ -16,7 +17,9 @@ const clean = raw
   .replace(/;$/, '');         // drop extra ;
 
 
-console.log('↳ cleaned FRONTEND_URL:', JSON.stringify(clean))
+console.log('↳ cleaned FRONTEND_URL (.stringify):', JSON.stringify(clean))
+console.log('↳ cleaned FRONTEND_URL:', clean);
+
 const FRONTEND_URLS = [ clean, 'http://localhost:3000' ].filter(Boolean)
 console.log('↳ allowed origins:', FRONTEND_URLS)
 
