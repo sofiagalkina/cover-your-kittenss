@@ -24,6 +24,7 @@ const FRONTEND_URLS = [ clean, 'http://localhost:3000' ].filter(Boolean)
 console.log('↳ allowed origins:', FRONTEND_URLS)
 
 console.log('👉 process.env.FRONTEND_URL =', JSON.stringify(process.env.FRONTEND_URL));
+console.log(`🔗 Backend public URL: ${process.env.RAILWAY_PUBLIC_DOMAIN || 'Unknown'}`);
 
 // extra check to see where semicolon is coming from:
 
