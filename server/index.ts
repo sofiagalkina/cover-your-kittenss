@@ -25,6 +25,7 @@ console.log('↳ allowed origins:', FRONTEND_URLS)
 
 console.log('👉 process.env.FRONTEND_URL =', JSON.stringify(process.env.FRONTEND_URL));
 console.log(`🔗 Backend public URL: ${process.env.RAILWAY_PUBLIC_DOMAIN || 'Unknown'}`);
+console.log('Connecting to socket at:', process.env.NEXT_PUBLIC_SOCKET_URL);
 
 
 
