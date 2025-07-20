@@ -18,7 +18,7 @@ const Particle = () => {
      className="h-screen w-full z-0" // Ensuring the particles are in the background
      init={particlesInit}
       options={{
-        fullScreen: { enable: false }, // Ensures it doesn't take over the entire screen unless wanted
+        fullScreen: { enable: true }, // Ensures it doesn't take over the entire screen unless wanted
         particles: {
           number: {
             value: 50,
