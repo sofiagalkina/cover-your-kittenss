@@ -12,8 +12,10 @@ export default function Home() {
   };
 
   return (
-    <div className="p-8 text-center text-white ">
-      <h1 className="text-4xl font-bold mb-6 helloKitty">Welcome to Cover Your Kittens!</h1>
+    <div className="p-8 text-center ">
+   
+
+      <h1 className="text-4xl font-bold mb-6 text-red-500 ">Welcome to Cover Your Kittens!</h1>
       <input
         type="text"
         placeholder="Enter Room ID"
