@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Particle from "../components/Particle";
 
 export default function Home() {
   const [code, setCode] = useState('');
@@ -12,10 +13,11 @@ export default function Home() {
   };
 
   return (
-    <div className=" text-center">
-   
-
-      <h1 className="text-red-500 text-4xl mb-6  ">Welcome to Cover Your Kittens!</h1>
+    
+    <div className="relative min-h-screen text-center">
+      <Particle />
+     <div>
+      <h1 className="">Welcome to Cover Your Kittens!</h1>
       <input
         type="text"
         placeholder="Enter Room ID"
@@ -24,6 +26,7 @@ export default function Home() {
         className="border p-2 mr-2"
       />
       <button onClick={handleJoin} className="bg-blue-500 text-white px-4 py-2">Join Room</button>
+      </div>
     </div>
   );
 }
