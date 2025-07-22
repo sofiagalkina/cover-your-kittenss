@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
+import styles from "../styles/Particle.module.css"; 
 
 console.log("Loading particles component"); // Debugging log
 
@@ -14,8 +15,11 @@ const Particle = () => {
   }, []);
 
   return (
+
+
+    <div className={styles.container}>
     <Particles
-     className="h-screen w-full z-0" // Ensuring the particles are in the background
+     className={styles.canvas} 
      init={particlesInit}
       options={{
         fullScreen: { enable: true }, // Ensures it doesn't take over the entire screen unless wanted
@@ -44,7 +48,9 @@ const Particle = () => {
         },
       }}
     />
+    </div>
   );
+  
 };
 
 export default Particle;

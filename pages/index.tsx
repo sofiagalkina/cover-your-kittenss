@@ -15,7 +15,7 @@ export default function Home() {
   return (
     
     <div className="relative min-h-screen text-center">
-      <Particle />
+      <Particle/>
      <div>
       <h1 className="">Welcome to Cover Your Kittens!</h1>
       <input
