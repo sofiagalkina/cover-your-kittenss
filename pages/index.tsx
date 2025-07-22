@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     
-    <div className="relative min-h-screen text-center">
+    <div className="">
       <Particle/>
      <div>
       <h1 className="">Welcome to Cover Your Kittens!</h1>
@@ -23,9 +23,9 @@ export default function Home() {
         placeholder="Enter Room ID"
         value={code}
         onChange={(e) => setCode(e.target.value)}
-        className="border p-2 mr-2"
+        className=""
       />
-      <button onClick={handleJoin} className="bg-blue-500 text-white px-4 py-2">Join Room</button>
+      <button onClick={handleJoin} className="">Join Room</button>
       </div>
     </div>
   );

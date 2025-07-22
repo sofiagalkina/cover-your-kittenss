@@ -54,8 +54,8 @@ export default function RoomPage() {
 
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">Room: {code}</h2>
+    <div className="">
+      <h2 className="">Room: {code}</h2>
 
       {!joined ? (
         <>
@@ -64,14 +64,14 @@ export default function RoomPage() {
             placeholder="Enter your name"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="border p-2 mr-2"
+            className=""
           />
-          <button onClick={handleJoin} className="bg-green-500 text-white px-4 py-2">Join</button>
+          <button onClick={handleJoin} className="">Join</button>
         </>
       ) : (
         <>
-          <h3 className="text-xl font-semibold mt-6">Users in Room:</h3>
-          <ul className="mt-2">
+          <h3 className="">Users in Room:</h3>
+          <ul className="">
             {users.map((user, idx) => (
               <li key={idx}>{user}</li>
             ))}
