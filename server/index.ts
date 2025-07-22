@@ -79,6 +79,15 @@ io.on('connection', (socket) => {
     io.to(code).emit('room-users', rooms[code]);
   });
 
+  // this is redirecting everyone in the room 
+socket.on('start-game', ({ code }) => {
+  console.log(`game starting in room ${code}`); 
+  if (rooms[code]) {
+    io.to(code).emit('game-started'); // this sends to everyone
+  }
+});
+
+
   socket.on('disconnect', () => {
     const userData = socketToRoom[socket.id];
     if (userData) {
