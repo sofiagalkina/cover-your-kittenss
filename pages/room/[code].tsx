@@ -31,6 +31,7 @@ export default function RoomPage() {
     const handleRoomUsers = (users: string[]) => {
       console.log('👥 Updated users in room:', users);
       setUsers(users);
+      console.log(`how many users in the room : ${users.length}`)
     };
 
     socket.on('room-users', handleRoomUsers);
