@@ -87,6 +87,13 @@ socket.on('start-game', ({ code }) => {
   }
 });
 
+socket.on('get-room-users', ({ code }) => {
+  if (rooms[code]) {
+    socket.emit('room-users', rooms[code]);
+  }
+});
+
+
 
   socket.on('disconnect', () => {
     const userData = socketToRoom[socket.id];

@@ -97,9 +97,18 @@ export default function RoomPage() {
           </ul>
           <button
             onClick={() => {
+              if(users.length < 2){
+                alert("at least 2 players are required to start the game");
+                return;
+              }
+              if(users.length > 6){
+                alert("can't start game with more than 6 players");
+                return;
+              }
               console.log('emitting start game for room', code)
               socket.emit('start-game', { code });
             }}
+            disabled={users.length < 2 || users.length > 6}
           >
             Start Game
           </button>
